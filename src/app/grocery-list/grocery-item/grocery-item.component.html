@@ -1,0 +1,41 @@
+<div class="container">
+  <!-- Display grocery items -->
+  <div *ngIf="groceryItems.length > 0">
+    <h3>Grocery Items:</h3>
+    <ul>
+      <li *ngFor="let item of groceryItems">
+        {{ item.name }} (Quantity: {{ item.quantity }})
+        <!-- <button (click)="editGroceryItem(item)">Edit</button> -->
+        <button (click)="deleteGroceryItem(item)">Delete</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Create new grocery item -->
+  <div>
+    <h3>Create New Grocery Item:</h3>
+    <form (submit)="createGroceryItem(newItemName, newItemQuantity)">
+      <div class="mb-3">
+        <input
+          type="text"
+          [(ngModel)]="newItemName"
+          name="item-name"
+          placeholder="Enter the name of the item"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <input
+          type="number"
+          [(ngModel)]="newItemQuantity"
+          name="item-quantity"
+          placeholder="Enter the quantity"
+          class="form-control"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+</div>

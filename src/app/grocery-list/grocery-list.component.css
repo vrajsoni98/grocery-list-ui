@@ -1,0 +1,25 @@
+.label-with-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-group {
+  margin-left: 10px;
+}
+
+/* Center the label text within the card */
+.label-name {
+  text-align: center;
+  flex: 1;
+}
+
+/* Custom CSS for multi-row navbar */
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nav-item {
+  flex: 0 0 50%; /* Adjust the percentage based on the number of items you want in each row */
+}

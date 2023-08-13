@@ -1,0 +1,254 @@
+<!-- Form for creating a new grocery list -->
+<div class="container">
+  <form (submit)="createGroceryList(name.value, description.value)">
+    <div class="mb-3">
+      <input
+        #name
+        type="text"
+        placeholder="Enter the Name of Grocery List"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        #description
+        type="text"
+        placeholder="Enter Description (optional)"
+        class="form-control"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">
+      Create New Grocery List
+    </button>
+  </form>
+
+  <br />
+
+  <!-- Bootsrap Nav Bar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+          <ng-container *ngFor="let list of groceryLists; let i = index">
+            <div class="col mb-4">
+              <div class="card label-with-buttons">
+                <div class="card-body">
+                  <label
+                    [routerLink]="['/grocerylist', list.id]"
+                    class="nav-link active label-name"
+                    aria-current="page"
+                    (click)="loadGroceryItems(list.id)"
+                  >
+                    {{ list.name }}
+                  </label>
+                  <div class="btn-group">
+                    <button
+                      (click)="openModal(list)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      class="btn btn-sm btn-primary"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      (click)="deleteGroceryList(list.id)"
+                      class="btn btn-sm btn-danger"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div *ngIf="selectedList">
+    <h2>{{ selectedList.name }}</h2>
+    <app-grocery-item [listId]="selectedList.id"></app-grocery-item>
+  </div>
+</div>
+
+<!-- <div class="container">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav flex-wrap" *ngFor="let list of groceryLists">
+          <li class="nav-item">
+            <div class="card label-with-buttons">
+              <div class="card-body">
+                <label
+                  [routerLink]="['/grocerylist', list.id]"
+                  class="nav-link active label-name"
+                  aria-current="page"
+                  >{{ list.name }}
+                </label>
+                <div class="btn-group">
+                  <button
+                    (click)="openModal(list)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="btn btn-sm btn-primary"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    (click)="deleteGroceryList(list.id)"
+                    class="btn btn-sm btn-danger"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+          &nbsp;
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div> -->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <input
+            type="text"
+            [(ngModel)]="groceryListName"
+            placeholder="Enter the Name of Grocery List"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="text"
+            [(ngModel)]="groceryListDescription"
+            placeholder="Enter Description (optional)"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="editGroceryList()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<!-- <div class="modal-body" *ngIf="ActivateModal">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Grocery List</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="closeModal()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-froup row">
+            <!-- <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="groceryListName"
+              placeholder="Enter grocery List Name"
+            />
+          </div>
+
+            <div class="mb-3">
+              <input
+                type="text"
+                [(ngModel)]="groceryListName"
+                placeholder="Enter the Name of Grocery List"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                type="text"
+                [(ngModel)]="groceryListDescription"
+                placeholder="Enter Description (optional)"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <button (click)="editGroceryList()" class="btn btn-primary">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
