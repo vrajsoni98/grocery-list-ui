@@ -8,6 +8,7 @@ import { GroceryItemComponent } from './grocery-list/grocery-item/grocery-item.c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedService } from './shared.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent, GroceryListComponent, GroceryItemComponent],
@@ -18,7 +19,7 @@ import { SharedService } from './shared.service';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [SharedService],
+  providers: [SharedService, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,10 @@
-<div class="container">
+<div class="container border border-primary">
   <h1 class="d-flex justify-content-center">Grocery List</h1>
+
+  <div class="d-flex justify-content-between">
+    <p>Current Date: {{ currentDate | date }}</p>
+    <p>Current Time: {{ currentTime | date : "shortTime" }}</p>
+  </div>
 </div>
 
 <router-outlet></router-outlet>

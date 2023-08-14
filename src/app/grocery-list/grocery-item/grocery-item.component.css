@@ -1,0 +1,5 @@
+.purchased-item {
+  background-color: #d9edf7; /* Light blue background color */
+  color: #31708f; /* Dark blue text color */
+  text-decoration: line-through; /* Strikethrough text */
+}

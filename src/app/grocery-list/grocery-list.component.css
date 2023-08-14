@@ -23,3 +23,8 @@
 .nav-item {
   flex: 0 0 50%; /* Adjust the percentage based on the number of items you want in each row */
 }
+
+.active-card {
+  background-color: #f0f0f0; /* Add your desired active card background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the active card */
+}
