@@ -3,3 +3,65 @@
   color: #31708f; /* Dark blue text color */
   text-decoration: line-through; /* Strikethrough text */
 }
+
+/* Add this CSS to your Angular component's stylesheet */
+/* Add this CSS to your Angular component's stylesheet */
+
+/* Grocery Item Container */
+.grocery-list-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Create New Grocery Item */
+.create-grocery-item {
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.create-grocery-item h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Grocery Items */
+.grocery-items {
+  margin-top: 20px;
+}
+
+.grocery-items h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.tag button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.purchased-item {
+  background-color: #c8e6c9;
+}

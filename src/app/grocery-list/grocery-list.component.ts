@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroceryList } from '../models/grocery.models';
 import { SharedService } from '../shared.service';
@@ -23,6 +23,7 @@ export class GroceryListComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
     });
+
     this.groceryListFormModal = this.formBuilder.group({
       name: ['', Validators.required],
       description: [''],

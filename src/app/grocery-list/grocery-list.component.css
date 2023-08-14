@@ -1,30 +1,116 @@
-.label-with-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Grocery List Container */
+.grocery-list-container {
+  background-color: #f8f9fa;
+  padding: 20px;
 }
 
-.btn-group {
-  margin-left: 10px;
+/* Form Container */
+.form-container {
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-/* Center the label text within the card */
-.label-name {
-  text-align: center;
-  flex: 1;
+.form-title {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-/* Custom CSS for multi-row navbar */
-.flex-wrap {
-  display: flex;
-  flex-wrap: wrap;
+.form-group {
+  margin-bottom: 15px;
 }
 
-.nav-item {
-  flex: 0 0 50%; /* Adjust the percentage based on the number of items you want in each row */
+/* Grocery List */
+.grocery-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.list-card {
+  margin-bottom: 20px;
 }
 
 .active-card {
-  background-color: #f0f0f0; /* Add your desired active card background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the active card */
+  background-color: #e6f7ff;
+  border: 1px solid #b3e0ff;
+}
+
+.card-title {
+  font-size: 20px;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.card-date {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+/* CSS for the selected-list section */
+.selected-list {
+  background-color: #f8f9fa;
+  border: 1px solid #d1d1d1;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.selected-list h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.selected-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.created-on-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.description-text {
+  font-size: 16px;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* CSS for the grocery-items-container (assuming there's a component CSS file) */
+.grocery-items-container {
+  margin-top: 20px;
+}
+/* Modal */
+.modal-content {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+  font-size: 24px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-header {
+  padding: 20px;
 }

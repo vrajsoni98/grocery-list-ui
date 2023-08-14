@@ -1,0 +1,31 @@
+/* Grocery List Container */
+.grocery-list-container {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Grocery List Title */
+.grocery-list-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+/* Date and Time Container */
+.date-time-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Current Date and Time */
+.current-date,
+.current-time {
+  font-size: 16px;
+  color: #666;
+}

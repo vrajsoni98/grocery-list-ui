@@ -70,7 +70,7 @@ export class GroceryItemComponent implements OnInit {
       .subscribe((item) => {
         this.groceryItems.push(item);
         this.groceryItemForm.reset(); // Reset the form
-        this.groceryItemForm.patchValue({ quantity: 1 }); // Set quantity to 1
+        // this.groceryItemForm.patchValue({ quantity: 1 }); // Set quantity to 1
       });
   }
 

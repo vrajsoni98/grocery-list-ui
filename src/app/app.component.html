@@ -1,9 +1,22 @@
-<div class="container border border-primary">
+<!-- <div class="container border border-primary">
   <h1 class="d-flex justify-content-center">Grocery List</h1>
 
   <div class="d-flex justify-content-between">
     <p>Current Date: {{ currentDate | date }}</p>
     <p>Current Time: {{ currentTime | date : "shortTime" }}</p>
+  </div>
+</div>
+
+<router-outlet></router-outlet> -->
+
+<div class="grocery-list-container">
+  <h1 class="grocery-list-title">My Grocery List</h1>
+
+  <div class="date-time-container">
+    <p class="current-date">Today's Date: {{ currentDate | date }}</p>
+    <p class="current-time">
+      Current Time: {{ currentTime | date : "shortTime" }}
+    </p>
   </div>
 </div>
 

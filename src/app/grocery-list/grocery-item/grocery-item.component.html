@@ -1,135 +1,132 @@
-<!-- Create new grocery item -->
-<div>
-  <h3>Create New Grocery Item:</h3>
-  <form [formGroup]="groceryItemForm" (ngSubmit)="createGroceryItem()">
-    <div class="mb-3">
-      <input
-        type="text"
-        formControlName="name"
-        placeholder="Enter the name of the item"
-        class="form-control"
-        required
-      />
-    </div>
-    <div class="mb-3">
-      <input
-        type="number"
-        formControlName="quantity"
-        placeholder="Enter the quantity"
-        class="form-control"
-        required
-      />
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!groceryItemForm.valid"
-    >
-      Create
-    </button>
-  </form>
-</div>
-
-<!-- Display grocery items -->
-<div *ngIf="groceryItems.length > 0">
-  <h3>Grocery Items:</h3>
-  <div class="row">
-    <ng-container *ngFor="let item of groceryItems">
-      <div class="col-md-4">
-        <div class="card mb-3" [ngClass]="{ 'purchased-item': item.purchased }">
-          <div class="card-body">
-            <h5 class="card-title">{{ item.name }}</h5>
-            <p class="card-text">Quantity: {{ item.quantity }}<br /></p>
-            <div class="d-flex justify-content-between">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  name="purchasedCheckbox"
-                  [checked]="item.purchased"
-                  (change)="markAsPurchased(item)"
-                />
-                <label class="form-check-label"> Purchased </label>
-              </div>
-              <div>
-                <button
-                  (click)="openModal(item)"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  class="btn btn-primary"
-                >
-                  Edit
-                </button>
-                <button
-                  (click)="deleteGroceryItem(item)"
-                  class="btn btn-danger ml-2"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+<div class="grocery-list-container">
+  <!-- Create new grocery item -->
+  <div class="create-grocery-item">
+    <h3>Create New Grocery Item:</h3>
+    <form [formGroup]="groceryItemForm" (ngSubmit)="createGroceryItem()">
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Enter the name of the item"
+          class="form-control"
+          required
+        />
       </div>
-    </ng-container>
+      <div class="form-group">
+        <input
+          type="number"
+          formControlName="quantity"
+          placeholder="Enter the quantity"
+          class="form-control"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!groceryItemForm.valid"
+      >
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </form>
   </div>
-</div>
 
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">
-          Edit Grocery Item
-        </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form
-          [formGroup]="groceryItemFormModal"
-          (ngSubmit)="updateGroceryItem()"
-        >
-          <div class="mb-3">
-            <input
-              type="text"
-              formControlName="name"
-              placeholder="Enter the Name of Grocery Item"
-              class="form-control"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              type="text"
-              formControlName="quantity"
-              placeholder="Enter Quantity (optional)"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3 form-check">
-            <input
-              type="checkbox"
-              formControlName="purchased"
-              class="form-check-input"
-            />
-            <label class="form-check-label">Purchased</label>
-          </div>
-          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
-            Update
+  <!-- Display grocery items -->
+  <div *ngIf="groceryItems.length > 0" class="grocery-items">
+    <h3>Grocery Items:</h3>
+    <div class="tag-cloud">
+      <span
+        *ngFor="let item of groceryItems"
+        class="tag"
+        [ngClass]="{ 'purchased-item': item.purchased }"
+      >
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="purchasedCheckbox"
+            [checked]="item.purchased"
+            (change)="markAsPurchased(item)"
+          />
+          {{ item.name }} -
+          {{ item.quantity }}
+        </label>
+        <div class="btn-group">
+          <button
+            (click)="openModal(item)"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            <i class="fa-solid fa-pen-to-square" style="color: #3498db"></i>
           </button>
-        </form>
+          <button (click)="deleteGroceryItem(item)">
+            <i class="fa-solid fa-trash" style="color: #3498db"></i>
+          </button>
+        </div>
+      </span>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Edit Grocery Item
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            [formGroup]="groceryItemFormModal"
+            (ngSubmit)="updateGroceryItem()"
+          >
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="name"
+                placeholder="Enter the Name of Grocery Item"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="quantity"
+                placeholder="Enter Quantity (optional)"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group form-check">
+              <input
+                type="checkbox"
+                formControlName="purchased"
+                class="form-check-input"
+              />
+              <label class="form-check-label">Purchased</label>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
