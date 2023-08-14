@@ -12,14 +12,18 @@ export class SharedService {
   constructor(private http: HttpClient) {}
 
   // Grocery List APIs
+
+  // Get all grocery lists
   getGroceryLists(): Observable<GroceryList[]> {
     return this.http.get<GroceryList[]>(`${this.APIUrl}/grocerylists/`);
   }
 
+  // Get details of a specific grocery list by ID
   getGroceryListDetail(id: number): Observable<GroceryList> {
     return this.http.get<GroceryList>(`${this.APIUrl}/grocerylists/${id}/`);
   }
 
+  // Create a new grocery list
   createGroceryList(groceryList: GroceryList): Observable<GroceryList> {
     return this.http.post<GroceryList>(
       `${this.APIUrl}/grocerylists/`,
@@ -27,6 +31,7 @@ export class SharedService {
     );
   }
 
+  // Update an existing grocery list
   updateGroceryList(
     id: number,
     groceryList: GroceryList
@@ -37,17 +42,21 @@ export class SharedService {
     );
   }
 
+  // Delete a grocery list by ID
   deleteGroceryList(id: number): Observable<void> {
     return this.http.delete<void>(`${this.APIUrl}/grocerylists/${id}/`);
   }
 
   // Grocery Item APIs
+
+  // Get all grocery items for a specific grocery list
   getGroceryItemsForList(listId: number): Observable<GroceryItem[]> {
     return this.http.get<GroceryItem[]>(
       `${this.APIUrl}/grocerylists/${listId}/groceryitems/`
     );
   }
 
+  // Get details of a specific grocery item by ID within a specific grocery list
   getGroceryItemDetail(
     listId: number,
     itemId: number
@@ -57,6 +66,7 @@ export class SharedService {
     );
   }
 
+  // Create a new grocery item within a specific grocery list
   createGroceryItemForList(
     listId: number,
     groceryItem: GroceryItem
@@ -67,6 +77,7 @@ export class SharedService {
     );
   }
 
+  // Update an existing grocery item within a specific grocery list
   updateGroceryItemForList(
     listId: number,
     itemId: number,
@@ -78,12 +89,14 @@ export class SharedService {
     );
   }
 
+  // Delete a grocery item by ID within a specific grocery list
   deleteGroceryItemForList(listId: number, itemId: number): Observable<void> {
     return this.http.delete<void>(
       `${this.APIUrl}/grocerylists/${listId}/groceryitems/${itemId}/`
     );
   }
 
+  // Get the names of all grocery lists
   getAllGroceryListNames(): Observable<GroceryList[]> {
     return this.http.get<GroceryList[]>(`${this.APIUrl}/grocerylists/`);
   }

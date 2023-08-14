@@ -1,9 +1,14 @@
+<!-- Grocery List Component Template -->
+
+<!-- Container for the entire grocery list section -->
 <div class="grocery-list-container">
-  <!-- Form -->
+  <!-- Form for creating a new grocery list -->
   <div class="form-container">
     <h3 class="form-title">Create New Grocery List</h3>
+    <!-- Angular Reactive Form for creating a new grocery list -->
     <form [formGroup]="groceryForm" (ngSubmit)="createGroceryList()">
       <div class="form-group">
+        <!-- Input field for the name of the grocery list (required) -->
         <input
           formControlName="name"
           type="text"
@@ -13,6 +18,7 @@
         />
       </div>
       <div class="form-group">
+        <!-- Input field for the description of the grocery list (optional) -->
         <input
           formControlName="description"
           type="text"
@@ -20,11 +26,13 @@
           class="form-control"
         />
       </div>
+      <!-- Submit button for creating the grocery list -->
       <button
         type="submit"
         class="btn btn-primary"
         [disabled]="!groceryForm.get('name')?.valid"
       >
+        <!-- Icon for adding a new grocery list -->
         <i class="fa-solid fa-plus"></i>
       </button>
     </form>
@@ -32,7 +40,9 @@
 
   <!-- Grocery List Card View -->
   <div class="grocery-list">
+    <!-- Display each grocery list as a card -->
     <div *ngFor="let list of groceryLists" class="list-card">
+      <!-- Card with a link to view the grocery list details -->
       <div
         class="card"
         [ngClass]="{ 'active-card': list.id === selectedList?.id }"
@@ -42,16 +52,23 @@
           [routerLink]="['/grocerylist', list.id]"
           (click)="loadGroceryItems(list.id)"
         >
-          <h5 class="card-title">{{ list.name }}</h5>
-          <p class="card-date">Created on: {{ list.created_on | date }}</p>
+          <!-- Display the name of the grocery list -->
+          <h5 class="card-title text-center">{{ list.name }}</h5>
+          <!-- Display the creation date of the grocery list -->
+          <p class="card-date text-center">
+            Created on: {{ list.created_on | date }}
+          </p>
           <div class="card-buttons">
+            <!-- Button to open the grocery list -->
             <button
               [routerLink]="['/grocerylist', list.id]"
               (click)="loadGroceryItems(list.id)"
               class="btn btn-success"
             >
+              <!-- Icon for opening a grocery list -->
               <i class="fa-solid fa-folder-open"></i>
             </button>
+            <!-- Button to open the edit modal for the grocery list -->
             <button
               (click)="openModal(list)"
               [routerLink]="['/grocerylist', list.id]"
@@ -59,12 +76,15 @@
               data-bs-target="#ListModal"
               class="btn btn-primary mx-1"
             >
+              <!-- Icon for editing a grocery list -->
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
+            <!-- Button to delete the grocery list -->
             <button
               (click)="deleteGroceryList(list.id)"
               class="btn btn-danger mx-1"
             >
+              <!-- Icon for deleting a grocery list -->
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -73,21 +93,25 @@
     </div>
   </div>
 
-  <!-- Selected List -->
+  <!-- Selected List Details -->
   <div *ngIf="selectedList" class="selected-list">
     <div class="selected-list-header">
+      <!-- Display the name of the selected grocery list -->
       <h2>{{ selectedList.name }}</h2>
+      <!-- Display the creation date of the selected grocery list -->
       <p class="created-on-text">
         Created on: {{ selectedList.created_on | date }}
       </p>
     </div>
+    <!-- Display the description of the selected grocery list -->
     <p class="description-text">{{ selectedList.description }}</p>
     <div class="grocery-items-container">
+      <!-- Display grocery items associated with the selected list -->
       <app-grocery-item [list]="selectedList"></app-grocery-item>
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Edit Grocery List Modal -->
   <div
     class="modal fade"
     id="ListModal"
@@ -98,9 +122,11 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
+          <!-- Title for the edit modal -->
           <h1 class="modal-title fs-5" id="exampleModalLabel">
             Edit Grocery List
           </h1>
+          <!-- Close button for the edit modal -->
           <button
             type="button"
             class="btn-close"
@@ -109,11 +135,13 @@
           ></button>
         </div>
         <div class="modal-body">
+          <!-- Angular Reactive Form for editing a grocery list -->
           <form
             [formGroup]="groceryListFormModal"
             (ngSubmit)="editGroceryList()"
           >
             <div class="form-group">
+              <!-- Input field for the name of the grocery list (required) -->
               <input
                 formControlName="name"
                 type="text"
@@ -123,6 +151,7 @@
               />
             </div>
             <div class="form-group">
+              <!-- Input field for the description of the grocery list (optional) -->
               <input
                 formControlName="description"
                 type="text"
@@ -130,12 +159,14 @@
                 class="form-control"
               />
             </div>
+            <!-- Save button for updating the grocery list -->
             <button
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
               (click)="editGroceryList()"
             >
+              <!-- Icon for saving the updated grocery list -->
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
           </form>

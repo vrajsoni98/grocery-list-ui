@@ -1,3 +1,5 @@
+// Grocery Item Component TypeScript
+
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -11,25 +13,36 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./grocery-item.component.css'],
 })
 export class GroceryItemComponent implements OnInit {
+  // Input property for the current grocery list
   @Input() list!: GroceryList;
+  // ID of the current grocery list
   listId = this.list?.id;
 
+  // Selected grocery item (for editing)
   selectedItem!: GroceryItem;
 
+  // Array to store the list of grocery items
   groceryItems: GroceryItem[] = [];
+
+  // Form group for creating a new grocery item
   groceryItemForm: FormGroup;
+
+  // Form group for editing a grocery item (used in the modal)
   groceryItemFormModal: FormGroup;
 
+  // Constructor for initializing the component
   constructor(
     private route: ActivatedRoute,
     private groceryService: SharedService,
     private formBuilder: FormBuilder
   ) {
+    // Initialize the grocery item form
     this.groceryItemForm = this.formBuilder.group({
       name: ['', Validators.required],
       quantity: ['', Validators.required],
     });
 
+    // Initialize the grocery item form used in the modal
     this.groceryItemFormModal = this.formBuilder.group({
       name: ['', Validators.required],
       quantity: ['', Validators.required],
@@ -38,9 +51,11 @@ export class GroceryItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Load the grocery items for the current list
     this.loadGroceryItems();
   }
 
+  // Load the grocery items for the current list
   loadGroceryItems(): void {
     this.route.paramMap
       .pipe(
@@ -54,28 +69,34 @@ export class GroceryItemComponent implements OnInit {
       });
   }
 
+  // Create a new grocery item
   createGroceryItem(): void {
     if (this.groceryItemForm.invalid) {
       return;
     }
 
+    // Prepare the new grocery item data
     const newItem: Partial<GroceryItem> = {
       name: this.groceryItemForm.value.name,
       quantity: this.groceryItemForm.value.quantity,
       grocery_list: this.listId,
     };
 
+    // Call the service to create the grocery item
     this.groceryService
       .createGroceryItemForList(this.listId, newItem as GroceryItem)
       .subscribe((item) => {
+        // Add the new item to the displayed grocery items
         this.groceryItems.push(item);
-        this.groceryItemForm.reset(); // Reset the form
-        // this.groceryItemForm.patchValue({ quantity: 1 }); // Set quantity to 1
+        // Reset the form after successful item creation
+        this.groceryItemForm.reset();
       });
   }
 
+  // Open the edit modal for a grocery item
   openModal(item: GroceryItem) {
     this.selectedItem = item;
+    // Set the values in the modal form
     this.groceryItemFormModal.setValue({
       name: item.name,
       quantity: item.quantity,
@@ -83,6 +104,7 @@ export class GroceryItemComponent implements OnInit {
     });
   }
 
+  // Update a grocery item
   updateGroceryItem(): void {
     if (!this.selectedItem) {
       return;
@@ -94,7 +116,7 @@ export class GroceryItemComponent implements OnInit {
     this.selectedItem.quantity = quantity;
     this.selectedItem.purchased = purchased;
 
-    // Call the API to update the grocery item
+    // Call the service to update the grocery item
     this.groceryService
       .updateGroceryItemForList(
         this.listId,
@@ -107,19 +129,26 @@ export class GroceryItemComponent implements OnInit {
       });
   }
 
+  // Delete a grocery item
   deleteGroceryItem(item: GroceryItem): void {
     if (confirm('Are you sure?')) {
+      // Call the service to delete the grocery item
       this.groceryService
         .deleteGroceryItemForList(this.listId, item.id)
         .subscribe(() => {
+          // Remove the item from the displayed grocery items
           this.groceryItems = this.groceryItems.filter((i) => i.id !== item.id);
         });
     }
   }
 
+  // Mark a grocery item as purchased or not purchased
   markAsPurchased(item: GroceryItem): void {
+    // Toggle the purchased status
     const purchasedValue = !item.purchased;
     item.purchased = purchasedValue;
+
+    // Call the service to update the grocery item's purchased status
     this.groceryService
       .updateGroceryItemForList(this.listId, item.id, item)
       .subscribe(() => {

@@ -1,9 +1,14 @@
+<!-- Grocery Item Component Template -->
+
+<!-- Container for the grocery item section -->
 <div class="grocery-list-container">
-  <!-- Create new grocery item -->
+  <!-- Create new grocery item form -->
   <div class="create-grocery-item">
     <h3>Create New Grocery Item:</h3>
+    <!-- Angular Reactive Form for creating a new grocery item -->
     <form [formGroup]="groceryItemForm" (ngSubmit)="createGroceryItem()">
       <div class="form-group">
+        <!-- Input field for the name of the grocery item (required) -->
         <input
           type="text"
           formControlName="name"
@@ -13,6 +18,7 @@
         />
       </div>
       <div class="form-group">
+        <!-- Input field for the quantity of the grocery item (required) -->
         <input
           type="number"
           formControlName="quantity"
@@ -21,11 +27,13 @@
           required
         />
       </div>
+      <!-- Submit button for creating the grocery item -->
       <button
         type="submit"
         class="btn btn-primary"
         [disabled]="!groceryItemForm.valid"
       >
+        <!-- Icon for adding a new grocery item -->
         <i class="fa-solid fa-plus"></i>
       </button>
     </form>
@@ -34,12 +42,14 @@
   <!-- Display grocery items -->
   <div *ngIf="groceryItems.length > 0" class="grocery-items">
     <h3>Grocery Items:</h3>
+    <!-- Display each grocery item as a tag -->
     <div class="tag-cloud">
       <span
         *ngFor="let item of groceryItems"
         class="tag"
         [ngClass]="{ 'purchased-item': item.purchased }"
       >
+        <!-- Checkbox to mark the item as purchased -->
         <label class="checkbox-label">
           <input
             type="checkbox"
@@ -48,18 +58,23 @@
             [checked]="item.purchased"
             (change)="markAsPurchased(item)"
           />
-          {{ item.name }} -
-          {{ item.quantity }}
+          <!-- Display the name and quantity of the item -->
+          {{ item.name }} - {{ item.quantity }}
         </label>
+        <!-- Button group for edit and delete actions -->
         <div class="btn-group">
+          <!-- Button to open the edit modal for the item -->
           <button
             (click)="openModal(item)"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
+            <!-- Icon for editing a grocery item -->
             <i class="fa-solid fa-pen-to-square" style="color: #3498db"></i>
           </button>
+          <!-- Button to delete the item -->
           <button (click)="deleteGroceryItem(item)">
+            <!-- Icon for deleting a grocery item -->
             <i class="fa-solid fa-trash" style="color: #3498db"></i>
           </button>
         </div>
@@ -67,7 +82,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Edit Grocery Item Modal -->
   <div
     class="modal fade"
     id="exampleModal"
@@ -78,9 +93,11 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
+          <!-- Title for the edit modal -->
           <h1 class="modal-title fs-5" id="exampleModalLabel">
             Edit Grocery Item
           </h1>
+          <!-- Close button for the edit modal -->
           <button
             type="button"
             class="btn-close"
@@ -89,11 +106,13 @@
           ></button>
         </div>
         <div class="modal-body">
+          <!-- Angular Reactive Form for editing a grocery item -->
           <form
             [formGroup]="groceryItemFormModal"
             (ngSubmit)="updateGroceryItem()"
           >
             <div class="form-group">
+              <!-- Input field for the name of the grocery item (required) -->
               <input
                 type="text"
                 formControlName="name"
@@ -103,6 +122,7 @@
               />
             </div>
             <div class="form-group">
+              <!-- Input field for the quantity of the grocery item (optional) -->
               <input
                 type="text"
                 formControlName="quantity"
@@ -111,6 +131,7 @@
               />
             </div>
             <div class="form-group form-check">
+              <!-- Checkbox for marking the item as purchased -->
               <input
                 type="checkbox"
                 formControlName="purchased"
@@ -118,11 +139,13 @@
               />
               <label class="form-check-label">Purchased</label>
             </div>
+            <!-- Save button for updating the grocery item -->
             <button
               type="submit"
               class="btn btn-primary"
               data-bs-dismiss="modal"
             >
+              <!-- Icon for saving the updated grocery item -->
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
           </form>
