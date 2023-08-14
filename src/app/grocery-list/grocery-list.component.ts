@@ -11,7 +11,6 @@ import { SharedService } from '../shared.service';
 export class GroceryListComponent implements OnInit {
   groceryLists: GroceryList[] = [];
   selectedList: GroceryList | null = null;
-  isFirstItemLoaded = false;
 
   groceryForm: FormGroup;
   groceryListFormModal!: FormGroup;
@@ -37,7 +36,7 @@ export class GroceryListComponent implements OnInit {
   loadGroceryLists(): void {
     this.groceryListService.getGroceryLists().subscribe((lists) => {
       this.groceryLists = lists;
-      if (!this.isFirstItemLoaded && this.groceryLists.length > 0) {
+      if (this.groceryLists.length > 0) {
         this.loadGroceryItems(this.groceryLists[0]?.id);
       }
     });
