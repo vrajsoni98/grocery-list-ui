@@ -6,8 +6,12 @@
   <div class="form-container">
     <h3 class="form-title">Create New Grocery List</h3>
     <!-- Angular Reactive Form for creating a new grocery list -->
-    <form [formGroup]="groceryForm" (ngSubmit)="createGroceryList()">
-      <div class="form-group">
+    <form
+      [formGroup]="groceryForm"
+      (ngSubmit)="createGroceryList()"
+      class="row g-3"
+    >
+      <div class="col-md-4">
         <!-- Input field for the name of the grocery list (required) -->
         <input
           formControlName="name"
@@ -17,7 +21,7 @@
           required
         />
       </div>
-      <div class="form-group">
+      <div class="col-md-4">
         <!-- Input field for the description of the grocery list (optional) -->
         <input
           formControlName="description"
@@ -26,15 +30,17 @@
           class="form-control"
         />
       </div>
-      <!-- Submit button for creating the grocery list -->
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="!groceryForm.get('name')?.valid"
-      >
-        <!-- Icon for adding a new grocery list -->
-        <i class="fa-solid fa-plus"></i>
-      </button>
+      <div class="col-md-2">
+        <!-- Submit button for creating the grocery list -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!groceryForm.get('name')?.valid"
+        >
+          <!-- Icon for adding a new grocery list -->
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
     </form>
   </div>
 
