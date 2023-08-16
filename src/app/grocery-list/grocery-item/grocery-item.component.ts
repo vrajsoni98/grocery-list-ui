@@ -39,13 +39,13 @@ export class GroceryItemComponent implements OnInit {
     // Initialize the grocery item form
     this.groceryItemForm = this.formBuilder.group({
       name: ['', Validators.required],
-      quantity: ['', Validators.required, Validators.min(1)],
+      quantity: ['', [Validators.required, Validators.min(1)]],
     });
 
     // Initialize the grocery item form used in the modal
     this.groceryItemFormModal = this.formBuilder.group({
       name: ['', Validators.required],
-      quantity: ['', Validators.required, Validators.min(0)],
+      quantity: ['', [Validators.required, Validators.min(1)]],
       purchased: [false],
     });
   }
