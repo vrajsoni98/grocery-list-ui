@@ -7,7 +7,8 @@ import { GroceryList, GroceryItem } from './models/grocery.models'; // Import th
   providedIn: 'root',
 })
 export class SharedService {
-  readonly APIUrl = 'http://127.0.0.1:8000/';
+  //readonly APIUrl = 'http://127.0.0.1:8000/';
+  readonly APIUrl = 'http://djangogrocery.pythonanywhere.com/';
 
   constructor(private http: HttpClient) {}
 

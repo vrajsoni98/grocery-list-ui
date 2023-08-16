@@ -78,7 +78,13 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "/grocery-list-ui/",
+            "repo": "https://github.com/vrajsoni98/grocery-list-ui",
+            "userPage": false,
+            "message": "Deployed to GitHub Pages"
+          }
         }
       }
     }
