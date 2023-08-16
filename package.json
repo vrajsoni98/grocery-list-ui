@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "deploy": "npx angular-cli-ghpages -d docs",
+    "deploy": "ng build --configuration=production --base-href=/grocery-list-ui/ && npx angular-cli-ghpages -d docs",
     "test": "ng test"
   },
   "private": true,
