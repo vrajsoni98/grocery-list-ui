@@ -1,6 +1,6 @@
 // Grocery List Component TypeScript
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroceryList } from '../models/grocery.models';
 import { SharedService } from '../shared.service';
@@ -27,7 +27,9 @@ export class GroceryListComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private groceryListService: SharedService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2,
+    private elementRef: ElementRef
   ) {
     // Initialize the grocery form
     this.groceryForm = this.formBuilder.group({
@@ -116,5 +118,15 @@ export class GroceryListComponent implements OnInit {
   loadGroceryItems(listId: number): void {
     this.selectedList =
       this.groceryLists.find((list) => list.id === listId) || null;
+
+    // Scroll to the grocery-item component when a card is clicked
+    setTimeout(() => {
+      const groceryItemComponent = this.elementRef.nativeElement.querySelector(
+        '#grocery-item-component'
+      );
+      if (groceryItemComponent) {
+        groceryItemComponent.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
   }
 }

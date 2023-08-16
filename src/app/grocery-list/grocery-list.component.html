@@ -113,7 +113,10 @@
     <p class="description-text">{{ selectedList.description }}</p>
     <div class="grocery-items-container">
       <!-- Display grocery items associated with the selected list -->
-      <app-grocery-item [list]="selectedList"></app-grocery-item>
+      <app-grocery-item
+        [list]="selectedList"
+        id="grocery-item-component"
+      ></app-grocery-item>
     </div>
   </div>
 

@@ -3,7 +3,7 @@
 <!-- Container for the grocery item section -->
 <div class="grocery-list-container">
   <div class="create-grocery-item">
-    <h3>Create New Grocery Item:</h3>
+    <h3>Create New Grocery Item for {{ list.name }}:</h3>
     <!-- Angular Reactive Form for creating a new grocery item -->
     <form
       [formGroup]="groceryItemForm"
@@ -15,7 +15,7 @@
         <input
           type="text"
           formControlName="name"
-          placeholder="Enter the name of the item"
+          placeholder="Enter the Name of Grocery Item"
           class="form-control"
           required
         />
@@ -25,7 +25,7 @@
         <input
           type="number"
           formControlName="quantity"
-          placeholder="Enter the quantity"
+          placeholder="Enter the quantity (positive)"
           class="form-control"
           required
         />
@@ -131,7 +131,7 @@
               <input
                 type="text"
                 formControlName="quantity"
-                placeholder="Enter Quantity (optional)"
+                placeholder="Enter Quantity (positive)"
                 class="form-control"
               />
             </div>
