@@ -78,7 +78,6 @@ export class GroceryItemComponent implements OnInit {
       )
       .subscribe((items) => {
         this.groceryItems = items;
-
         this.filteredGroceryItems = [...this.groceryItems];
       });
   }
@@ -104,6 +103,7 @@ export class GroceryItemComponent implements OnInit {
         this.groceryItems.push(item);
         // Reset the form after successful item creation
         this.groceryItemForm.reset();
+        this.searchQuery = '';
         this.loadGroceryItems();
       });
   }
@@ -140,6 +140,7 @@ export class GroceryItemComponent implements OnInit {
       )
       .subscribe(() => {
         // After successful update, close the modal and reload the grocery items
+        this.searchQuery = '';
         this.loadGroceryItems();
       });
   }
@@ -153,6 +154,7 @@ export class GroceryItemComponent implements OnInit {
         .subscribe(() => {
           // Remove the item from the displayed grocery items
           this.groceryItems = this.groceryItems.filter((i) => i.id !== item.id);
+          this.searchQuery = '';
           this.loadGroceryItems();
         });
     }
