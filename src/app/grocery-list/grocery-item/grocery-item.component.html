@@ -11,7 +11,6 @@
       class="row g-3"
     >
       <div class="col-md-4">
-        <!-- Input field for the name of the grocery item (required) -->
         <input
           type="text"
           formControlName="name"
@@ -21,7 +20,6 @@
         />
       </div>
       <div class="col-md-4">
-        <!-- Input field for the quantity of the grocery item (required) -->
         <input
           type="number"
           formControlName="quantity"
@@ -31,13 +29,11 @@
         />
       </div>
       <div class="col-md-4">
-        <!-- Submit button for creating the grocery item -->
         <button
           type="submit"
           class="btn btn-primary"
           [disabled]="!groceryItemForm.valid"
         >
-          <!-- Icon for adding a new grocery item -->
           <i class="fa-solid fa-plus"></i>
         </button>
       </div>
@@ -53,7 +49,7 @@
       <div class="col-md-2">
         <select
           [(ngModel)]="selectedOption"
-          (ngModelChange)="onDropdownChange($event)"
+          (ngModelChange)="onFilterChange($event)"
           class="form-select select-filter"
         >
           <option selected value="all">Show All</option>
@@ -95,7 +91,6 @@
           'hidden-item': shouldHideItem(item)
         }"
       >
-        <!-- Checkbox to mark the item as purchased -->
         <label class="checkbox-label">
           <input
             type="checkbox"
@@ -104,23 +99,17 @@
             [checked]="item.purchased"
             (change)="markAsPurchased(item)"
           />
-          <!-- Display the name and quantity of the item -->
           {{ item.name }} - {{ item.quantity }}
         </label>
-        <!-- Button group for edit and delete actions -->
         <div class="btn-group">
-          <!-- Button to open the edit modal for the item -->
           <button
             (click)="openModal(item)"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
-            <!-- Icon for editing a grocery item -->
             <i class="fa-solid fa-pen-to-square" style="color: #3498db"></i>
           </button>
-          <!-- Button to delete the item -->
           <button (click)="deleteGroceryItem(item)">
-            <!-- Icon for deleting a grocery item -->
             <i class="fa-solid fa-trash" style="color: #3498db"></i>
           </button>
         </div>
@@ -139,11 +128,9 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <!-- Title for the edit modal -->
           <h1 class="modal-title fs-5" id="exampleModalLabel">
             Edit Grocery Item
           </h1>
-          <!-- Close button for the edit modal -->
           <button
             type="button"
             class="btn-close"
@@ -152,13 +139,11 @@
           ></button>
         </div>
         <div class="modal-body">
-          <!-- Angular Reactive Form for editing a grocery item -->
           <form
             [formGroup]="groceryItemFormModal"
             (ngSubmit)="updateGroceryItem()"
           >
             <div class="form-group">
-              <!-- Input field for the name of the grocery item (required) -->
               <input
                 type="text"
                 formControlName="name"
@@ -168,7 +153,6 @@
               />
             </div>
             <div class="form-group">
-              <!-- Input field for the quantity of the grocery item (optional) -->
               <input
                 type="text"
                 formControlName="quantity"
@@ -177,7 +161,6 @@
               />
             </div>
             <div class="form-group form-check">
-              <!-- Checkbox for marking the item as purchased -->
               <input
                 type="checkbox"
                 formControlName="purchased"
@@ -185,13 +168,11 @@
               />
               <label class="form-check-label">Purchased</label>
             </div>
-            <!-- Save button for updating the grocery item -->
             <button
               type="submit"
               class="btn btn-primary"
               data-bs-dismiss="modal"
             >
-              <!-- Icon for saving the updated grocery item -->
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
           </form>

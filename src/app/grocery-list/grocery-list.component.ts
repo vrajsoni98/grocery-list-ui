@@ -46,15 +46,14 @@ export class GroceryListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Load the initial list of grocery lists
     this.loadGroceryLists();
   }
 
   // Load the list of grocery lists
   loadGroceryLists(): void {
+    //Call the services to get the values
     this.groceryListService.getGroceryLists().subscribe((lists) => {
       this.groceryLists = lists;
-      // Load the items of the first list by default (if available)
       if (this.groceryLists.length > 0) {
         this.id = this.groceryLists[0]?.id;
         this.loadGroceryItems(this.id);
@@ -65,11 +64,13 @@ export class GroceryListComponent implements OnInit {
 
   // Create a new grocery list
   createGroceryList(): void {
+    // Prepare the new grocery list data
     const { name, description } = this.groceryForm.value;
     const newList: Partial<GroceryList> = { name, description: null };
     if (description && description.trim() !== '') {
       newList.description = description;
     }
+    // Call the service to create the grocery list
     this.groceryListService
       .createGroceryList(newList as GroceryList)
       .subscribe(() => {
@@ -98,11 +99,10 @@ export class GroceryListComponent implements OnInit {
     this.selectedList.name = name;
     this.selectedList.description = description;
 
-    // Call the API to update the grocery list (you need to implement this)
+    // Call the service to update the grocery list
     this.groceryListService
       .updateGroceryList(this.selectedList.id, this.selectedList)
       .subscribe(() => {
-        // After successful update, close the modal and reload the grocery lists
         this.loadGroceryLists();
       });
   }
@@ -110,6 +110,7 @@ export class GroceryListComponent implements OnInit {
   // Delete a grocery list
   deleteGroceryList(listId: number): void {
     if (confirm('Are you sure?')) {
+      // Call the service to delete the grocery item
       this.groceryListService.deleteGroceryList(listId).subscribe(() => {
         this.loadGroceryLists();
       });
@@ -120,8 +121,6 @@ export class GroceryListComponent implements OnInit {
   loadGroceryItems(listId: number): void {
     this.selectedList =
       this.groceryLists.find((list) => list.id === listId) || null;
-
-    console.log('tst', listId);
 
     // Scroll to the grocery-item component when a card is clicked
     setTimeout(() => {

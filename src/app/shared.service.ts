@@ -7,12 +7,12 @@ import { GroceryList, GroceryItem } from './models/grocery.models'; // Import th
   providedIn: 'root',
 })
 export class SharedService {
-  //readonly APIUrl = 'http://127.0.0.1:8000/';
-  readonly APIUrl = 'https://djangogrocery.pythonanywhere.com/';
+  readonly APIUrl = 'http://127.0.0.1:8000/';
+  // readonly APIUrl = 'https://djangogrocery.pythonanywhere.com/';
 
   constructor(private http: HttpClient) {}
 
-  // Grocery List APIs
+  //+++++++++++++++++++ Grocery List APIs +++++++++++++++++++
 
   // Get all grocery lists
   getGroceryLists(): Observable<GroceryList[]> {
@@ -48,7 +48,7 @@ export class SharedService {
     return this.http.delete<void>(`${this.APIUrl}/grocerylists/${id}/`);
   }
 
-  // Grocery Item APIs
+  // +++++++++++++++++++ Grocery Item APIs +++++++++++++++++++
 
   // Get all grocery items for a specific grocery list
   getGroceryItemsForList(listId: number): Observable<GroceryItem[]> {

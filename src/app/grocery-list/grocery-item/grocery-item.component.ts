@@ -15,10 +15,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class GroceryItemComponent implements OnInit {
   // Input property for the current grocery list
   @Input() list!: GroceryList;
-  // ID of the current grocery list
 
+  //Input property for the first list
   @Input() firstId!: number;
 
+  // ID of the current grocery list or first list
   listId: number = this.list?.id || this.firstId;
 
   // Selected grocery item (for editing)
@@ -33,11 +34,11 @@ export class GroceryItemComponent implements OnInit {
   // Form group for editing a grocery item (used in the modal)
   groceryItemFormModal: FormGroup;
 
-  // Drop down Filter
+  // Property to hold the filter option
   selectedOption: string = 'all';
 
   // Property to hold the current sorting option
-  currentSortOption: string = 'name';
+  currentSortOption: string = 'default';
 
   // Property to hold the search query
   searchQuery: string = '';
@@ -66,7 +67,6 @@ export class GroceryItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Load the grocery items for the current list
     this.loadGroceryItems();
   }
 
@@ -80,6 +80,7 @@ export class GroceryItemComponent implements OnInit {
           return this.groceryService.getGroceryItemsForList(this.listId);
         })
       )
+      //Call the services to get the values
       .subscribe((items) => {
         this.groceryItems = items;
         this.filteredGroceryItems = [...this.groceryItems];
@@ -103,9 +104,7 @@ export class GroceryItemComponent implements OnInit {
     this.groceryService
       .createGroceryItemForList(this.listId, newItem as GroceryItem)
       .subscribe((item) => {
-        // Add the new item to the displayed grocery items
         this.groceryItems.push(item);
-        // Reset the form after successful item creation
         this.groceryItemForm.reset();
         this.searchQuery = '';
         this.loadGroceryItems();
@@ -143,7 +142,6 @@ export class GroceryItemComponent implements OnInit {
         this.selectedItem
       )
       .subscribe(() => {
-        // After successful update, close the modal and reload the grocery items
         this.searchQuery = '';
         this.loadGroceryItems();
       });
@@ -156,7 +154,6 @@ export class GroceryItemComponent implements OnInit {
       this.groceryService
         .deleteGroceryItemForList(this.listId, item.id)
         .subscribe(() => {
-          // Remove the item from the displayed grocery items
           this.groceryItems = this.groceryItems.filter((i) => i.id !== item.id);
           this.searchQuery = '';
           this.loadGroceryItems();
@@ -164,59 +161,48 @@ export class GroceryItemComponent implements OnInit {
     }
   }
 
-  // Mark a grocery item as purchased or not purchased
+  // Method to Mark a grocery item as purchased or not purchased
   markAsPurchased(item: GroceryItem): void {
-    // Toggle the purchased status
     const purchasedValue = !item.purchased;
     item.purchased = purchasedValue;
 
-    // Call the service to update the grocery item's purchased status
+    // Call the service to update the grocery item as purchased
     this.groceryService
       .updateGroceryItemForList(this.listId, item.id, item)
       .subscribe(() => {
-        // If needed, you can reload the grocery items after the update
         this.loadGroceryItems();
       });
   }
 
   // Method to handle the change in the dropdown selection
-  onDropdownChange(selectedValue: string): void {
+  onFilterChange(selectedValue: string): void {
     this.selectedOption = selectedValue;
   }
 
   // Method to determine if an item should be hidden based on the selected filter
   shouldHideItem(item: GroceryItem): boolean {
-    if (this.selectedOption === 'all') {
-      return false;
-    } else if (this.selectedOption === 'purchased') {
-      return !item.purchased;
-    } else if (this.selectedOption === 'notPurchased') {
-      return item.purchased;
-    }
-    return false;
-  }
-
-  // Method to handle sorting based on the selected sorting option
-  sortGroceryItems(): void {
-    if (this.currentSortOption === 'default') {
-      this.loadGroceryItems();
-    } else if (this.currentSortOption === 'name') {
-      this.groceryItems.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (this.currentSortOption === 'quantity') {
-      this.groceryItems.sort((a, b) => a.quantity - b.quantity);
-    }
+    return this.selectedOption === 'purchased'
+      ? !item.purchased
+      : this.selectedOption === 'notPurchased'
+      ? item.purchased
+      : false;
   }
 
   // Method to handle the change in the sorting selection
   onSortOptionChange(selectedSortOption: string): void {
     this.currentSortOption = selectedSortOption;
-    this.sortGroceryItems(); // Call the sorting method
+    if (selectedSortOption === 'default') {
+      this.loadGroceryItems();
+    } else if (selectedSortOption === 'name') {
+      this.filteredGroceryItems.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (selectedSortOption === 'quantity') {
+      this.filteredGroceryItems.sort((a, b) => a.quantity - b.quantity);
+    }
   }
 
   // Method to handle the change in the search input
   onSearchChange(): void {
     if (this.searchQuery.trim() === '') {
-      // If search query is empty, show all items
       this.filteredGroceryItems = [...this.groceryItems];
     } else {
       this.filteredGroceryItems = this.groceryItems.filter((item) =>
