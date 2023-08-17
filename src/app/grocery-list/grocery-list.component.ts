@@ -28,7 +28,6 @@ export class GroceryListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private groceryListService: SharedService,
     private router: Router,
-    private renderer: Renderer2,
     private elementRef: ElementRef
   ) {
     // Initialize the grocery form
