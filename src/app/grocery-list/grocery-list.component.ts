@@ -24,6 +24,8 @@ export class GroceryListComponent implements OnInit {
   // Angular Reactive Form for editing a grocery list (modal)
   groceryListFormModal!: FormGroup;
 
+  id!: number;
+
   constructor(
     private formBuilder: FormBuilder,
     private groceryListService: SharedService,
@@ -54,8 +56,9 @@ export class GroceryListComponent implements OnInit {
       this.groceryLists = lists;
       // Load the items of the first list by default (if available)
       if (this.groceryLists.length > 0) {
-        this.loadGroceryItems(this.groceryLists[0]?.id);
-        this.router.navigate(['/grocerylist', this.groceryLists[0]?.id]);
+        this.id = this.groceryLists[0]?.id;
+        this.loadGroceryItems(this.id);
+        this.router.navigate(['/grocerylist', this.id]);
       }
     });
   }
@@ -117,6 +120,8 @@ export class GroceryListComponent implements OnInit {
   loadGroceryItems(listId: number): void {
     this.selectedList =
       this.groceryLists.find((list) => list.id === listId) || null;
+
+    console.log('tst', listId);
 
     // Scroll to the grocery-item component when a card is clicked
     setTimeout(() => {

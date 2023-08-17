@@ -97,8 +97,8 @@ export class SharedService {
     );
   }
 
-  // Get the names of all grocery lists
-  getAllGroceryListNames(): Observable<GroceryList[]> {
-    return this.http.get<GroceryList[]>(`${this.APIUrl}/grocerylists/`);
-  }
+  // // Get the names of all grocery lists
+  // getAllGroceryListNames(): Observable<GroceryList[]> {
+  //   return this.http.get<GroceryList[]>(`${this.APIUrl}/grocerylists/`);
+  // }
 }

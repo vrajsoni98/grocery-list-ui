@@ -15,8 +15,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class GroceryItemComponent implements OnInit {
   // Input property for the current grocery list
   @Input() list!: GroceryList;
+  @Input() listId!: number;
   // ID of the current grocery list
-  listId = this.list?.id;
+  //listId = this.list?.id;
 
   // Selected grocery item (for editing)
   selectedItem!: GroceryItem;
@@ -69,6 +70,7 @@ export class GroceryItemComponent implements OnInit {
 
   // Load the grocery items for the current list
   loadGroceryItems(): void {
+    console.log(this.listId);
     this.route.paramMap
       .pipe(
         switchMap((params: ParamMap) => {
@@ -80,6 +82,24 @@ export class GroceryItemComponent implements OnInit {
         this.groceryItems = items;
         this.filteredGroceryItems = [...this.groceryItems];
       });
+    // this.groceryService.getGroceryItemsForList(this.listId);
+    // this.route.paramMap
+    //   .pipe(
+    //     switchMap((params: ParamMap) => {
+    //       const listId = +params.get('listId')!;
+    //       if (this.listId <= 0 || this.listId === undefined) {
+    //         // Handle the case where the listId is not valid
+    //         return [];
+    //       }
+
+    //       this.listId = listId;
+    //       return this.groceryService.getGroceryItemsForList(this.listId);
+    //     })
+    //   )
+    //   .subscribe((items) => {
+    //     this.groceryItems = items;
+    //     this.filteredGroceryItems = [...this.groceryItems];
+    //   });
   }
 
   // Create a new grocery item
