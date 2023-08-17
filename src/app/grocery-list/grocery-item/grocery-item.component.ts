@@ -33,6 +33,15 @@ export class GroceryItemComponent implements OnInit {
   // Drop down Filter
   selectedOption: string = 'all';
 
+  // Property to hold the current sorting option
+  currentSortOption: string = 'name';
+
+  // Property to hold the search query
+  searchQuery: string = '';
+
+  // Property to hold the filtered grocery items
+  filteredGroceryItems: GroceryItem[] = [];
+
   // Constructor for initializing the component
   constructor(
     private route: ActivatedRoute,
@@ -69,6 +78,8 @@ export class GroceryItemComponent implements OnInit {
       )
       .subscribe((items) => {
         this.groceryItems = items;
+
+        this.filteredGroceryItems = [...this.groceryItems];
       });
   }
 
@@ -93,6 +104,7 @@ export class GroceryItemComponent implements OnInit {
         this.groceryItems.push(item);
         // Reset the form after successful item creation
         this.groceryItemForm.reset();
+        this.loadGroceryItems();
       });
   }
 
@@ -141,6 +153,7 @@ export class GroceryItemComponent implements OnInit {
         .subscribe(() => {
           // Remove the item from the displayed grocery items
           this.groceryItems = this.groceryItems.filter((i) => i.id !== item.id);
+          this.loadGroceryItems();
         });
     }
   }
@@ -175,5 +188,34 @@ export class GroceryItemComponent implements OnInit {
       return item.purchased;
     }
     return false;
+  }
+
+  // Method to handle sorting based on the selected sorting option
+  sortGroceryItems(): void {
+    if (this.currentSortOption === 'default') {
+      this.loadGroceryItems();
+    } else if (this.currentSortOption === 'name') {
+      this.groceryItems.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (this.currentSortOption === 'quantity') {
+      this.groceryItems.sort((a, b) => a.quantity - b.quantity);
+    }
+  }
+
+  // Method to handle the change in the sorting selection
+  onSortOptionChange(selectedSortOption: string): void {
+    this.currentSortOption = selectedSortOption;
+    this.sortGroceryItems(); // Call the sorting method
+  }
+
+  // Method to handle the change in the search input
+  onSearchChange(): void {
+    if (this.searchQuery.trim() === '') {
+      // If search query is empty, show all items
+      this.filteredGroceryItems = [...this.groceryItems];
+    } else {
+      this.filteredGroceryItems = this.groceryItems.filter((item) =>
+        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
   }
 }

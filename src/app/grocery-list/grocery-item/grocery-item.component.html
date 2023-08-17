@@ -61,12 +61,33 @@
           <option value="notPurchased">Non-Purchased Items</option>
         </select>
       </div>
+      <!-- Drop Downlon Sort -->
+      <div class="col-md-2">
+        <select
+          [(ngModel)]="currentSortOption"
+          (ngModelChange)="onSortOptionChange($event)"
+          class="form-select select-filter"
+        >
+          <option selected value="default">Default Sorting</option>
+          <option value="name">Sort by Name</option>
+          <option value="quantity">Sort by Quantity</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange()"
+          class="form-control"
+          placeholder="Search by name..."
+        />
+      </div>
     </div>
 
     <!-- Display each grocery item as a tag -->
     <div class="tag-cloud">
       <span
-        *ngFor="let item of groceryItems"
+        *ngFor="let item of filteredGroceryItems"
         class="tag"
         [ngClass]="{
           'purchased-item': item.purchased,
