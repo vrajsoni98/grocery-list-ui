@@ -46,13 +46,32 @@
 
   <!-- Display grocery items -->
   <div *ngIf="groceryItems.length > 0" class="grocery-items">
-    <h3>Grocery Items:</h3>
+    <div class="row g-3">
+      <div class="col-md-2"><h3>Grocery Items:</h3></div>
+
+      <!-- Drop Downlon Filter -->
+      <div class="col-md-2">
+        <select
+          [(ngModel)]="selectedOption"
+          (ngModelChange)="onDropdownChange($event)"
+          class="form-select select-filter"
+        >
+          <option selected value="all">Show All</option>
+          <option value="purchased">Purchased Items</option>
+          <option value="notPurchased">Non-Purchased Items</option>
+        </select>
+      </div>
+    </div>
+
     <!-- Display each grocery item as a tag -->
     <div class="tag-cloud">
       <span
         *ngFor="let item of groceryItems"
         class="tag"
-        [ngClass]="{ 'purchased-item': item.purchased }"
+        [ngClass]="{
+          'purchased-item': item.purchased,
+          'hidden-item': shouldHideItem(item)
+        }"
       >
         <!-- Checkbox to mark the item as purchased -->
         <label class="checkbox-label">

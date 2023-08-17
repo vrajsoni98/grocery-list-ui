@@ -46,6 +46,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .tag {
@@ -64,4 +65,8 @@
 
 .purchased-item {
   background-color: #c8e6c9;
+}
+
+.hidden-item {
+  display: none;
 }

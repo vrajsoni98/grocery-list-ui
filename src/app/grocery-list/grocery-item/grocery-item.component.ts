@@ -30,6 +30,9 @@ export class GroceryItemComponent implements OnInit {
   // Form group for editing a grocery item (used in the modal)
   groceryItemFormModal: FormGroup;
 
+  // Drop down Filter
+  selectedOption: string = 'all';
+
   // Constructor for initializing the component
   constructor(
     private route: ActivatedRoute,
@@ -155,5 +158,22 @@ export class GroceryItemComponent implements OnInit {
         // If needed, you can reload the grocery items after the update
         this.loadGroceryItems();
       });
+  }
+
+  // Method to handle the change in the dropdown selection
+  onDropdownChange(selectedValue: string): void {
+    this.selectedOption = selectedValue;
+  }
+
+  // Method to determine if an item should be hidden based on the selected filter
+  shouldHideItem(item: GroceryItem): boolean {
+    if (this.selectedOption === 'all') {
+      return false;
+    } else if (this.selectedOption === 'purchased') {
+      return !item.purchased;
+    } else if (this.selectedOption === 'notPurchased') {
+      return item.purchased;
+    }
+    return false;
   }
 }
